@@ -29,5 +29,19 @@ class MainActivity : AppCompatActivity() {
             val homepage = Intent(this, HomePage::class.java)
             startActivity(homepage)
         }
+
+        val guestLoginButton2: Button = findViewById(R.id.loginButton)
+
+        guestLoginButton2.setOnClickListener(){
+            val homepage = Intent(this, HomePage::class.java)
+            startActivity(homepage)
+        }
+
+        val guestLoginButton3: Button = findViewById(R.id.signUpButton)
+
+        guestLoginButton3.setOnClickListener(){
+            val homepage = Intent(this, HomePage::class.java)
+            startActivity(homepage)
+        }
     }
 }

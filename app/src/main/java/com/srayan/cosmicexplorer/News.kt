@@ -4,8 +4,6 @@ import android.content.ClipData.Item
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +12,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
-class HomePage : AppCompatActivity() {
+
+class News : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Force Dark Mode regardless of system settings
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -23,12 +24,12 @@ class HomePage : AppCompatActivity() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.BLACK
         }
-        setContentView(R.layout.home_page)
+        setContentView(R.layout.news)
 
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationBar)
 
-        bottomNavigationView.selectedItemId  = R.id.navHome
+        bottomNavigationView.selectedItemId  = R.id.navNews
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -54,27 +55,15 @@ class HomePage : AppCompatActivity() {
         }
 
 
-        // Set up RecyclerView
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val webView: WebView = findViewById(R.id.webView)
 
-        // Create API service instance
-        val apiService = RetrofitClient.retrofit.create(ExoplanetApiService::class.java)
+        // Enable JavaScript (if needed)
+        webView.settings.javaScriptEnabled = true
 
-        apiService.getExoplanets(apiKey = "swsiqahhhdRkzs0ebOgr2Lvn3wszdElCuWyubTgt").enqueue(object : Callback<List<Exoplanet>> {
-            override fun onResponse(call: Call<List<Exoplanet>>, response: Response<List<Exoplanet>>) {
-                if (response.isSuccessful) {
-                    val progessBar = findViewById<ProgressBar>(R.id.progressBar)
-                    progessBar.visibility = View.GONE
-                    val exoplanets = response.body() ?: emptyList()
-                    val adapter = ExoplanetAdapter(exoplanets)
-                    recyclerView.adapter = adapter
-                }
-            }
+        // Load the webpage
+        webView.loadUrl("https://www.nasa.gov/news/")
 
-            override fun onFailure(call: Call<List<Exoplanet>>, t: Throwable) {
-                // Handle failure
-            }
-        })
+        // Set WebViewClient to stay within the app
+        webView.webViewClient = WebViewClient()
     }
 }

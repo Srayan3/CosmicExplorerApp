@@ -4,11 +4,11 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ExoplanetApiService {
+interface ExoplanetApiServiceDetails {
     @GET("TAP/sync")
-    fun getExoplanets(
-        @Query("query") query: String = "SELECT TOP 20 * FROM ps",
+    fun getExoplanetsDetails(
+        @Query("query") query: String,
         @Query("format") format: String = "json",
         @Query("apiKey") apiKey: String // Corrected this line
-    ): Call<List<Exoplanet>>
+    ): Call<List<ExoplanetDetails>>
 }

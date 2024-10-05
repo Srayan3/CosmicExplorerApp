@@ -9,7 +9,7 @@
         android:id="@+id/navHome"
         android:icon="@drawable/home"
         />
-    <item android:title="Website"
+    <item android:title="About Us"
         android:id="@+id/navWebsite"
         android:icon="@drawable/website"
         />
